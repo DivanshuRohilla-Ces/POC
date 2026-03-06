@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Users } from "../../app/types";
+import { Users } from "../../services/types";
 import { useWindowWidth } from "../../app/hooks/useWindowWidth";
 import Userlist from "../userList";
 

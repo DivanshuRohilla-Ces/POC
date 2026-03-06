@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { SidebarProps, Users } from "../app/types";
+import { SidebarProps, Users } from "../services/types";
 import RenderUsers from "./renderList";
 
 export default function Sidebar({user} : SidebarProps){

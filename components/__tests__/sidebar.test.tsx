@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Sidebar from "../sidebar";
-import { Users } from "../../app/types";
+import { Users } from "../../services/types";
 import "@testing-library/jest-dom";
 
 const mockUser: Users = {

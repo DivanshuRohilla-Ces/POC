@@ -4,7 +4,7 @@ import { useState } from "react";
 import Sidebar from "./sidebar";
 import Link from "next/link";
 import { useWindowWidth } from "../app/hooks/useWindowWidth";
-import { UserListProps, Users } from "../app/types";
+import { UserListProps, Users } from "../services/types";
 
 
 export default function Userlist({ users } : UserListProps) {
@@ -27,7 +27,7 @@ export default function Userlist({ users } : UserListProps) {
 
         if (isMobile) {
           return (
-            <Link key={user.id} href={`/user?userId=${user.id}`}>
+            <Link key={user.id} href={`/user/${user.id}`}>
               {content}
             </Link>
           );

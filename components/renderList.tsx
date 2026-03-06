@@ -1,4 +1,4 @@
-import { Users } from "../app/types";
+import { Users } from "../services/types";
 
 export default function RenderUsers(obj: Users) {
   return Object.entries(obj).map(([key, value]) => {
