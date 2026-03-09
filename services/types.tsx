@@ -75,3 +75,14 @@ export interface UserListProps {
 export interface SidebarProps {
   user: Users;
 }
+
+
+export interface AllUsersResponse {
+  success: boolean;
+  error?: string;
+  data?: { users: Users[] };
+}
+
+export interface ApiError extends Error {
+  message: string;
+}

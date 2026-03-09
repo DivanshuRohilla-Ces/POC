@@ -11,6 +11,11 @@ export default function Userlist({ users } : UserListProps) {
   const [userData, setUserData] = useState<Users | null>();
   const isMobile  = useWindowWidth();
   console.log(isMobile, "width");
+
+  if(users.length === 0){
+    return <div>No users found</div>;
+  }
+  
   return (
     <div className="flex gap-5 justify-between p-5 ">
      

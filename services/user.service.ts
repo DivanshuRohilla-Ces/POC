@@ -1,8 +1,29 @@
 import { notFound } from "next/navigation";
 
-export async function getUserDetails(id: string) {
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  image?: string;
+  age?: number;
+  [key: string]: any;
+}
+
+interface AllUsersResponse {
+  success: boolean;
+  error?: string;
+  data?: { users: User[] };
+}
+
+interface ApiError extends Error {
+  message: string;
+}
+
+export async function getUserDetails(id: string): Promise<User> {
   try {
-    const res = await fetch(`https://dummyjson.com/users/${id}`, {
+    const res: Response = await fetch(`https://dummyjson.com/users/${id}`, {
       cache: "no-store",
     });
     console.log("User details response:", res);
@@ -12,24 +33,17 @@ export async function getUserDetails(id: string) {
         "User not found. Please check the user ID and try again.",
       );
     }
-    if (res.status == 429) {
-      throw new Error("Rate limit exceeded. Please try again later.");
-    }
-    const data = await res.json();
+    const data: User = await res.json();
     return data;
   } catch (error) {
     console.error("Error fetching user details:", error);
     throw error;
-    // return {
-    //   success: false,
-    //   error: "An unexpected error occurred while fetching user details",
-    // };
   }
 }
 
-export async function getAllUsers() {
+export async function getAllUsers(): Promise<AllUsersResponse> {
   try {
-    const res = await fetch(`https://dummyjson.com/users`);
+    const res: Response = await fetch(`https://dummyjson.com/users`);
     if (!res.ok) {
       return { success: false, error: "Failed to fetch users" };
     }
