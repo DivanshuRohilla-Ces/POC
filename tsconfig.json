@@ -27,6 +27,6 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "app/api/getUsersList/route.js"  ],
   "exclude": ["node_modules"]
 }
