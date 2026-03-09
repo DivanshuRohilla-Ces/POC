@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import RenderUsers from "../renderList";
+import RenderUsers from "../../components/renderList";
 
 const mockUser = {
   firstName: "Emily",
