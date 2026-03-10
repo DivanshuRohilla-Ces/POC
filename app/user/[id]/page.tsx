@@ -1,0 +1,26 @@
+
+import Image from "next/image";
+import RenderUsers from "../../../components/renderList";
+import { getUserDetails } from "../../../services/user.service";
+import { notFound } from "next/navigation";
+
+export default async function User({ params }) {
+  const  userId  = await params;
+  let user = await getUserDetails(userId.id);
+  return (
+    <div className="border-2 border-gray-300 p-5">
+      <h1 className="text-gray-500">User Details</h1>
+
+      {user?.image && (
+        <Image
+          src={user.image}
+          alt="User Image"
+          width={100}
+          height={100}
+          loading="lazy"
+        />
+      )}
+           {RenderUsers(user)}
+    </div>
+  );
+}
