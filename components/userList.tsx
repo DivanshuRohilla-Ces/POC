@@ -1,50 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import Sidebar from "./sidebar";
 import Link from "next/link";
 import { useWindowWidth } from "../app/hooks/useWindowWidth";
 import { UserListProps, Users } from "../services/types";
+import Image from "next/image";
+import { makeUser } from "../app/__tests__/fixtures";
 
 
-export default function Userlist({ users } : UserListProps) {
+export default function Userlist({ users }: UserListProps) {
   const [userData, setUserData] = useState<Users | null>();
-  const isMobile  = useWindowWidth();
+  const isMobile = useWindowWidth();
   console.log(isMobile, "width");
 
-  if(users && users.length === 0){
+  if (users && users.length === 0) {
     return <div>No users found</div>;
   }
-  
+
   return (
     <div className="flex gap-5 justify-between p-5 ">
-     
-<div>
-      {users && users.map((user) => {
-        const content = (
-          <p
-            onClick={() => setUserData(user)}
-            className="p-1 cursor-pointer bg-grey-100 mt-1.5 text-black border-2 mb-1"
-          >
-            {user.firstName} {user.lastName}
-          </p>
-        );
+      <div>
+        {users &&
+          users.map((user) => {
+            const content = (
+              <div className="flex flex-row items-center gap-2.5 p-2 cursor-pointer bg-violet-200 mt-3 rounded-2xl" onClick={() => setUserData(user)}>
+                <div className="mr -2">
+                  <Image
+                    src={user.image}
+                    alt={user.firstName}
+                    width={50}
+                    height={50}
+                    className="rounded-full"
+                  />
+                </div>
+                <div>
+                  <p
+                 
+                    className="bg-grey-100 mt-1.5 text-black mb-1 font-bold"
+                  >
+                    {user.firstName} {user.lastName}
+                  </p>
+                  <p className="text-sm font">{user.company.department}</p>
+                </div>
+              </div>
+            );
 
-        if (isMobile) {
-          return (
-            <Link key={user.id} href={`/user/${user.id}`}>
-              {content}
-            </Link>
-          );
-        }
-        return (
-          <div key={user.id}>
-            {content}
-          </div>
-        );
-      })}
-    </div>
-      {userData && !isMobile &&  <Sidebar user={userData} />}
+            if (isMobile) {
+              return (
+                <Link key={user.id} href={`/user/${user.id}`}>
+                  {content}
+                </Link>
+              );
+            }
+            return (
+              <div
+                key={user.id}
+              >
+                {content}
+              </div>
+            );
+          })}
+      </div>
+      {userData && !isMobile && <Sidebar user={userData} />}
     </div>
   );
 }

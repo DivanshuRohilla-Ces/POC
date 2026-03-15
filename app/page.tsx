@@ -6,7 +6,7 @@ export default async function Home() {
   return (
     <div className="flex gap-5 p-1">
       <div className="flex flex-col gap-2.5 w-full p-2" >
-        <h1>Users list</h1>
+        <h1 className="text-3xl">Users list</h1>
         <Userlist users={data.users} />
       </div>
     </div>
