@@ -41,7 +41,7 @@ export default function Userlist({ users }: UserListProps) {
                   >
                     {user.firstName} {user.lastName}
                   </p>
-                  <p className="text-sm font">{user.company.department}</p>
+                  <p className="text-sm font">{user.email}</p>
                 </div>
               </div>
             );

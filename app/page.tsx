@@ -1,5 +1,5 @@
 import Userlist from "../components/userList";
-import { getAllUsers } from "../services/user.service";
+import { getAllUsers } from "../services/user-service";
 
 export default async function Home() {
   const data = await getAllUsers();

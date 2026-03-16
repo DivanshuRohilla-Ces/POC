@@ -1,7 +1,7 @@
 
 import Image from "next/image";
 import RenderUsers from "../../../components/renderList";
-import { getUserDetails } from "../../../services/user.service";
+import { getUserDetails } from "../../../services/user-service";
 
 export default async function User({ params }) {
   const  userId  = await params;
