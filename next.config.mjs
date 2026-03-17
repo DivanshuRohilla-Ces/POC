@@ -9,6 +9,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "dummyjson.com",
       },
+      {
+        protocol: "https",
+        hostname: "randomuser.me",
+      }
     ]
   }
 };

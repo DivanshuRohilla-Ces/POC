@@ -1,38 +1,17 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Users } from "../../services/types";
 import { useWindowWidth } from "../../app/hooks/useWindowWidth";
-import Userlist from "../userList";
+// import Userlist from "../userList";
+import { makeUser, makeUserList } from "../__tests__/fixtures/users.fixture";
+import Userlist from "../../components/userList";
 
 jest.mock("next/link", () => (props: any) => <a {...props} />);
-jest.mock("../sidebar", () => () => <div data-testid="sidebar">Sidebar</div>);
+jest.mock("../../components/sidebar", () => () => <div data-testid="sidebar">Sidebar</div>);
 
 // Mock the custom hook
 jest.mock("@/app/hooks/useWindowWidth");
 
-const mockUsers: Users[] = [
-  {
-    id: 1,
-    firstName: "Emily",
-    lastName: "Johnson",
-    email: "",
-    height: 170,
-    eyeColor: "",
-    bloodGroup: "",
-    ein: "",
-    image: "",
-  },
-  {
-    id: 2,
-    firstName: "John",
-    lastName: "Doe",
-    email: "",
-    height: 180,
-    eyeColor: "",
-    bloodGroup: "",
-    ein: "",
-    image: "",
-  },
-];
+  const mockUsers = makeUserList<Users>(5, makeUser);
 
 describe("UserList Component", () => {
 
@@ -42,15 +21,17 @@ describe("UserList Component", () => {
 
   test("renders all users on desktop", () => {
     render(<Userlist users={mockUsers} />);
+  
+    expect(mockUsers).toHaveLength(5);
 
-    expect(screen.getByText("Emily Johnson")).toBeInTheDocument();
-    expect(screen.getByText("John Doe")).toBeInTheDocument();
+    expect(screen.getByText(mockUsers[0].firstName + " " + mockUsers[0].lastName)).toBeInTheDocument();
+    expect(screen.getByText(mockUsers[1].firstName + " " + mockUsers[1].lastName)).toBeInTheDocument();
   });
 
   test("clicking a user sets userData state and shows Sidebar (desktop)", () => {
     render(<Userlist users={mockUsers} />);
 
-    const firstUser = screen.getByText("Emily Johnson");
+    const firstUser = screen.getByText(mockUsers[0].firstName + " " + mockUsers[0].lastName);
     fireEvent.click(firstUser);
 
     expect(screen.getByTestId("sidebar")).toBeInTheDocument();
@@ -61,7 +42,7 @@ describe("UserList Component", () => {
 
     render(<Userlist users={mockUsers} />);
 
-    const firstUser = screen.getByText("Emily Johnson");
+    const firstUser = screen.getByText(mockUsers[0].firstName + " " + mockUsers[0].lastName);
     expect(firstUser.closest("a")).not.toBeNull(); // wrapped in Link
 
     fireEvent.click(firstUser);
