@@ -7,12 +7,36 @@ import { useWindowWidth } from "../app/hooks/useWindowWidth";
 import { UserListProps, Users } from "../services/types";
 import Image from "next/image";
 import { makeUser } from "../app/__tests__/fixtures";
+import { deleteUser } from "../services/user-service";
 
 
-export default function Userlist({ users }: UserListProps) {
+export default function Userlist({ users: initialUsers }: UserListProps) {
   const [userData, setUserData] = useState<Users | null>();
+  const [users, setUsers] = useState(initialUsers);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
   const isMobile = useWindowWidth();
   console.log(isMobile, "width");
+
+  const handleDeleteUser = async (userId: number, userName: string) => {
+    if (confirm(`Are you sure you want to delete ${userName}?`)) {
+      setDeletingId(userId);
+      try {
+        const result = await deleteUser(userId);
+        if (result.success) {
+          setUsers(users.filter(u => u.id !== userId));
+          if (userData?.id === userId) {
+            setUserData(null);
+          }
+        } else {
+          alert("Failed to delete user");
+        }
+      } catch (error) {
+        alert("Error deleting user");
+      } finally {
+        setDeletingId(null);
+      }
+    }
+  };
 
   if (users && users.length === 0) {
     return <div>No users found</div>;
@@ -62,7 +86,7 @@ export default function Userlist({ users }: UserListProps) {
             );
           })}
       </div>
-      {userData && !isMobile && <Sidebar user={userData} />}
+      {userData && !isMobile && <Sidebar user={userData} onDeleteUser={handleDeleteUser} onUserDeleted={() => setUserData(null)} />}
     </div>
   );
 }

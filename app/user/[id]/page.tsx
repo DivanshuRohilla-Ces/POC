@@ -1,6 +1,6 @@
 
 import Image from "next/image";
-import RenderUsers from "../../../components/renderList";
+import RenderUsers from "../../../components/renderUsers";
 import { getUserDetails } from "../../../services/user-service";
 
 export default async function User({ params }) {
@@ -19,7 +19,7 @@ export default async function User({ params }) {
           loading="lazy"
         />
       )}
-           {RenderUsers(user)}
+       <RenderUsers user={user} />
     </div>
   );
 }
