@@ -12,7 +12,7 @@ export default function Userlist({ users } : UserListProps) {
   const isMobile  = useWindowWidth();
   console.log(isMobile, "width");
 
-  if(users.length === 0){
+  if(users && users.length === 0){
     return <div>No users found</div>;
   }
   
